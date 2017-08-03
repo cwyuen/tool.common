@@ -3,8 +3,10 @@ package com.primecredit.tool.common.wsobject.response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.primecredit.tool.common.domain.DiarizationSpeech;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DiarizationResponse {
 	private String clientMachineId;
 	private long millisecond;

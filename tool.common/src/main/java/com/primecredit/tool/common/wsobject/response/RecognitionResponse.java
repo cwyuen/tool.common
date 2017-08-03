@@ -2,6 +2,8 @@ package com.primecredit.tool.common.wsobject.response;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecognitionResponse {
 	private String clientMachineId;
 	private long millisecond;

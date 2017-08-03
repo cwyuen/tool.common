@@ -1,5 +1,8 @@
 package com.primecredit.tool.common.wsobject.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DiarizationRequest {
 	private String clientMachineId;
 	private long millisecond;
