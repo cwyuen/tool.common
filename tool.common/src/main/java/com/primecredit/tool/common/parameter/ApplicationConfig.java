@@ -7,8 +7,10 @@ public class ApplicationConfig {
 	
 	private static final String SPEECH_RECOGNITION_WS_ROOT = "http://localhost:18762/SpeechRecognition/";
 	private static final String SPEECH_RECOGNITION_WS_CONVERT = "recognition";
-	//private static final String SPEAKER_ID_WS_TEST = "test";
 
+	private static final String SPEECH_STATISTICS_WS_ROOT = "http://localhost:18763/SpeechStatistics/";
+	private static final String SPEECH_STATISTICS_WS_STATISTICS = "statistics";
+	
 
 	public static String getSpeakerIdentificationDiarizationServiceUrl() {
 		StringBuilder sb = new StringBuilder();
@@ -22,6 +24,14 @@ public class ApplicationConfig {
 		StringBuilder sb = new StringBuilder();
 		sb.append(SPEECH_RECOGNITION_WS_ROOT);
 		sb.append(SPEECH_RECOGNITION_WS_CONVERT);
+
+		return sb.toString();
+	}
+	
+	public static String getSpeechStatisticsServiceUrl() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(SPEECH_STATISTICS_WS_ROOT);
+		sb.append(SPEECH_STATISTICS_WS_STATISTICS);
 
 		return sb.toString();
 	}
