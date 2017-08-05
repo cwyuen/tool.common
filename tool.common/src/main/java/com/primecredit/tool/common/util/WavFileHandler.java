@@ -15,7 +15,6 @@ import javax.sound.sampled.AudioSystem;
 
 public class WavFileHandler {
 	
-	
 	private static final int MAX_PLAYTIME_PER_FILE = 40; // second
 
 	private static WavFileHandler instance = null;
@@ -31,7 +30,7 @@ public class WavFileHandler {
 		return FileUtil.listFiles(dir, "wav");
 	}
 
-	public File generateFile(String path, String fileName, byte[] data) {
+	public File generateFile(String path, String fileName, byte[] data) throws Exception {
 		StringBuilder sbPath = new StringBuilder();
 		sbPath.append(path);
 		if (!path.endsWith(String.valueOf(File.separatorChar))) {
@@ -42,11 +41,10 @@ public class WavFileHandler {
 		try (FileOutputStream stream = new FileOutputStream(sbPath.toString());) {
 			stream.write(data);
 		} catch (FileNotFoundException e) {
-	
-			e.printStackTrace();
+			throw new Exception("FileNotFoundException:" + e.getMessage());
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Exception("IOException:" + e.getMessage());
 		}
 		
 		return new File(sbPath.toString());
