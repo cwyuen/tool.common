@@ -5,29 +5,18 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.primecredit.tool.common.domain.DiarizationSpeech;
+import com.primecredit.tool.common.wsobject.BaseWsObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DiarizationResponse {
-	private String clientMachineId;
-	private long millisecond;
+public class DiarizationResponse extends BaseWsObject {
+
 	private List<DiarizationSpeech> dsList = new ArrayList<>();
 	
-	public String getClientMachineId() {
-		return clientMachineId;
-	}
-	public void setClientMachineId(String clientMachineId) {
-		this.clientMachineId = clientMachineId;
-	}
-	public long getMillisecond() {
-		return millisecond;
-	}
-	public void setMillisecond(long millisecond) {
-		this.millisecond = millisecond;
-	}
 	public List<DiarizationSpeech> getDsList() {
 		return dsList;
 	}
 	public void setDsList(List<DiarizationSpeech> dsList) {
 		this.dsList = dsList;
 	}
+	
 }

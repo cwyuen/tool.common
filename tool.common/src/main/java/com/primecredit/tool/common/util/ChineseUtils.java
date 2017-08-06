@@ -4,7 +4,7 @@ import java.lang.Character.UnicodeBlock;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ChineseUtil {
+public class ChineseUtils {
 
 	public static String removeNonChinese(String input) {
 		StringBuilder sbResult = new StringBuilder();

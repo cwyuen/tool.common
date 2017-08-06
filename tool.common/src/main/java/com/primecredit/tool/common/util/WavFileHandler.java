@@ -1,9 +1,6 @@
 package com.primecredit.tool.common.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ import javax.sound.sampled.AudioSystem;
 
 public class WavFileHandler {
 	
-	private static final int MAX_PLAYTIME_PER_FILE = 40; // second
+	private static final int MAX_PLAYTIME_PER_FILE = 10; // second
 
 	private static WavFileHandler instance = null;
 
@@ -27,28 +24,10 @@ public class WavFileHandler {
 	}
 
 	public List<String> listWavFiles(String dir) {
-		return FileUtil.listFiles(dir, "wav");
+		return FileUtils.listFiles(dir, "wav");
 	}
 
-	public File generateFile(String path, String fileName, byte[] data) throws Exception {
-		StringBuilder sbPath = new StringBuilder();
-		sbPath.append(path);
-		if (!path.endsWith(String.valueOf(File.separatorChar))) {
-			sbPath.append(File.separatorChar);
-		}
-		sbPath.append(fileName);
-
-		try (FileOutputStream stream = new FileOutputStream(sbPath.toString());) {
-			stream.write(data);
-		} catch (FileNotFoundException e) {
-			throw new Exception("FileNotFoundException:" + e.getMessage());
-			
-		} catch (IOException e) {
-			throw new Exception("IOException:" + e.getMessage());
-		}
-		
-		return new File(sbPath.toString());
-	}
+	
 	
 	public List<String> splitWavFile(String sourceFileName, String destPath) throws Exception {
 		List<String> resultList = new ArrayList<String>();
@@ -56,31 +35,39 @@ public class WavFileHandler {
 		
 		File srcFile = new File(sourceFileName);
 
-		AudioInputStream srcClip = AudioSystem.getAudioInputStream(new File(sourceFileName));
-		AudioFormat audioFormat = srcClip.getFormat();
-		long framesLenght = srcClip.getFrameLength();
-		double time = framesLenght / audioFormat.getFrameRate();
-
-		int numberofSplit = (int) (time / MAX_PLAYTIME_PER_FILE) + 1;
-
-		if (numberofSplit == 1) {
-			// File srcFile = new File(fileName);
-			File distFile = new File(destPath + srcFile.getName());
-			Files.copy(srcFile.toPath(), distFile.toPath());
-			resultList.add(distFile.getAbsolutePath());
-		} else {
-
-			int count = 1;
-			int startLen = 0;
-			while (count <= numberofSplit) {
-				long now = System.currentTimeMillis();
-				String distFileName = destPath + count + "_" + now + "_" + srcFile.getName();
-				copyWavAudioBySecond(sourceFileName, distFileName, startLen, MAX_PLAYTIME_PER_FILE);
-				resultList.add(distFileName);
-				count++;
-				startLen = startLen + MAX_PLAYTIME_PER_FILE;
+		AudioInputStream srcClip = null;
+				
+		try{
+			srcClip= AudioSystem.getAudioInputStream(new File(sourceFileName));
+			AudioFormat audioFormat = srcClip.getFormat();
+			long framesLenght = srcClip.getFrameLength();
+			double time = framesLenght / audioFormat.getFrameRate();
+	
+			int numberofSplit = (int) (time / MAX_PLAYTIME_PER_FILE) + 1;
+	
+			if (numberofSplit == 1) {
+				// File srcFile = new File(fileName);
+				File distFile = new File(destPath + srcFile.getName());
+				Files.copy(srcFile.toPath(), distFile.toPath());
+				resultList.add(distFile.getAbsolutePath());
+			} else {
+	
+				int count = 1;
+				int startLen = 0;
+				while (count <= numberofSplit) {
+					long now = System.currentTimeMillis();
+					String distFileName = destPath + count + "_" + now + "_" + srcFile.getName();
+					copyWavAudioBySecond(sourceFileName, distFileName, startLen, MAX_PLAYTIME_PER_FILE);
+					resultList.add(distFileName);
+					count++;
+					startLen = startLen + MAX_PLAYTIME_PER_FILE;
+				}
+	
 			}
-
+		}finally{		
+			if(srcClip != null){
+				srcClip.close();
+			}
 		}
 
 		return resultList;
@@ -89,7 +76,8 @@ public class WavFileHandler {
 	
 	public void copyWavAudioBySecond(String sourceFileName, String destinationFileName, 
 			double startSecond,
-			double secondsToCopy) {
+			double secondsToCopy) throws Exception {
+		
 		AudioInputStream inputStream = null;
 		AudioInputStream shortenedStream = null;
 		try {
@@ -103,9 +91,11 @@ public class WavFileHandler {
 			shortenedStream = new AudioInputStream(inputStream, format, framesOfAudioToCopy);
 			File destinationFile = new File(destinationFileName);
 			AudioSystem.write(shortenedStream, fileFormat.getType(), destinationFile);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception(e);
 		} finally {
+			
 			if (inputStream != null)
 				try {
 					inputStream.close();
@@ -120,5 +110,5 @@ public class WavFileHandler {
 				}
 		}
 	}
-
+	
 }

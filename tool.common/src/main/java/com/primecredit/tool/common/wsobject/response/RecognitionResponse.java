@@ -3,23 +3,12 @@ package com.primecredit.tool.common.wsobject.response;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.primecredit.tool.common.wsobject.BaseWsObject;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RecognitionResponse {
-	private String clientMachineId;
-	private long millisecond;
+public class RecognitionResponse extends BaseWsObject{
+	
 	List<String> speechTextList;
-	public String getClientMachineId() {
-		return clientMachineId;
-	}
-	public void setClientMachineId(String clientMachineId) {
-		this.clientMachineId = clientMachineId;
-	}
-	public long getMillisecond() {
-		return millisecond;
-	}
-	public void setMillisecond(long millisecond) {
-		this.millisecond = millisecond;
-	}
+	
 	public List<String> getSpeechTextList() {
 		return speechTextList;
 	}

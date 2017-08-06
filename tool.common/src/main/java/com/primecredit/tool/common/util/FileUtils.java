@@ -1,11 +1,14 @@
 package com.primecredit.tool.common.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileUtil {
+public class FileUtils {
 
 	public static void deleteFiles(String path) {
 
@@ -35,5 +38,24 @@ public class FileUtil {
 		return results;
 	}
 	
+	public static File generateFile(String path, String fileName, byte[] data) throws Exception {
+		StringBuilder sbPath = new StringBuilder();
+		sbPath.append(path);
+		if (!path.endsWith(String.valueOf(File.separatorChar))) {
+			sbPath.append(File.separatorChar);
+		}
+		sbPath.append(fileName);
+
+		try (FileOutputStream stream = new FileOutputStream(sbPath.toString());) {
+			stream.write(data);
+		} catch (FileNotFoundException e) {
+			throw new Exception("FileNotFoundException:" + e.getMessage());
+			
+		} catch (IOException e) {
+			throw new Exception("IOException:" + e.getMessage());
+		}
+		
+		return new File(sbPath.toString());
+	}
 	
 }

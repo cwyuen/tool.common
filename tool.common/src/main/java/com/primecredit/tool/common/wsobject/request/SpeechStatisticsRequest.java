@@ -3,26 +3,14 @@ package com.primecredit.tool.common.wsobject.request;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.primecredit.tool.common.wsobject.BaseWsObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SpeechStatisticsRequest {
-	private String clientMachineId;
-	private long millisecond;
+public class SpeechStatisticsRequest extends BaseWsObject{
+	
 	private String sourceFileName;
 	private List<String> speechTexts;
 	
-	public String getClientMachineId() {
-		return clientMachineId;
-	}
-	public void setClientMachineId(String clientMachineId) {
-		this.clientMachineId = clientMachineId;
-	}
-	public long getMillisecond() {
-		return millisecond;
-	}
-	public void setMillisecond(long millisecond) {
-		this.millisecond = millisecond;
-	}
 	public List<String> getSpeechTexts() {
 		return speechTexts;
 	}

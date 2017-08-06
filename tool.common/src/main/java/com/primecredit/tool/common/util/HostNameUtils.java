@@ -3,7 +3,7 @@ package com.primecredit.tool.common.util;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class HostNameUtil {
+public class HostNameUtils {
 
 	public static String getMachineHostName() {
 		String hostname = "Unknown";

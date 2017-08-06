@@ -1,25 +1,13 @@
 package com.primecredit.tool.common.wsobject.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.primecredit.tool.common.wsobject.BaseWsObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RecongnitionRequest {
-	private String clientMachineId;
-	private long millisecond;
+public class RecongnitionRequest extends BaseWsObject{
+	
 	private byte[] fileData;
 	
-	public String getClientMachineId() {
-		return clientMachineId;
-	}
-	public void setClientMachineId(String clientMachineId) {
-		this.clientMachineId = clientMachineId;
-	}
-	public long getMillisecond() {
-		return millisecond;
-	}
-	public void setMillisecond(long millisecond) {
-		this.millisecond = millisecond;
-	}
 	public byte[] getFileData() {
 		return fileData;
 	}

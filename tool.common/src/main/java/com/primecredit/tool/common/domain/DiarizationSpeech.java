@@ -10,7 +10,6 @@ public class DiarizationSpeech implements Comparable<DiarizationSpeech> {
 
 	private String sourceFileName = null;
 	private List<String> speechTextList = new ArrayList<String>();
-	private String speechText = "";
 
 	public String getName() {
 		return name;
@@ -44,13 +43,6 @@ public class DiarizationSpeech implements Comparable<DiarizationSpeech> {
 		this.sourceFileName = sourceFileName;
 	}
 
-	public String getSpeechText() {
-		return speechText;
-	}
-
-	public void setSpeechText(String speechText) {
-		this.speechText = speechText;
-	}
 
 	public int compareTo(DiarizationSpeech object) {
 
