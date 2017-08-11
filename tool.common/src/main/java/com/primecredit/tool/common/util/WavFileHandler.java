@@ -111,4 +111,58 @@ public class WavFileHandler {
 		}
 	}
 	
+	public void convertULAW2PCM(String sourceFileName, String destinationFileName) {
+		AudioInputStream inputStream = null;
+		AudioInputStream shortenedStream = null;
+		try {
+			File pcmFile = new File(destinationFileName);
+			File ulawFile = new File(sourceFileName);
+			AudioInputStream ais = null;
+			AudioFormat format = null;
+
+			ais = AudioSystem.getAudioInputStream(ulawFile);
+			format = ais.getFormat();
+
+			if (AudioFormat.Encoding.ULAW.equals(format.getEncoding()) || 
+					AudioFormat.Encoding.ALAW.equals(format.getEncoding())) {
+				
+				 AudioFormat newFormat = new AudioFormat(
+						 AudioFormat.Encoding.PCM_SIGNED,
+						 format.getSampleRate(),
+						 format.getSampleSizeInBits() * 2,
+						 format.getChannels(),
+						 format.getFrameSize() * 2,
+						 format.getFrameRate(),
+						 true);
+
+				//ais = AudioSystem.getAudioInputStream(format, ais);
+
+				AudioInputStream audioInputStreamAIS = AudioSystem.getAudioInputStream(newFormat, ais);
+				AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
+				int nWrittenFrames = 0;
+				nWrittenFrames = AudioSystem.write(audioInputStreamAIS, fileType, pcmFile);
+			}else {
+				long framesLenght = ais.getFrameLength();
+				double time = framesLenght / format.getFrameRate();
+				this.copyWavAudioBySecond(sourceFileName, destinationFileName, 0, time);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (inputStream != null)
+				try {
+					inputStream.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			if (shortenedStream != null)
+				try {
+					shortenedStream.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
 }
