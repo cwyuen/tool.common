@@ -1,5 +1,6 @@
 package com.primecredit.tool.common.util;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.Character.UnicodeBlock;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +8,10 @@ import java.util.Set;
 public class ChineseUtils {
 
 	public static String removeNonChinese(String input) {
+		if(input == null) {
+			input = "";
+		}
+		
 		StringBuilder sbResult = new StringBuilder();
 
 		@SuppressWarnings("serial")
@@ -34,5 +39,24 @@ public class ChineseUtils {
 		}
 
 		return sbResult.toString();
+	}
+	
+	public static String convertToUrlBig5(String utf8){
+		byte[] big5Str = new byte[0];
+		
+		try {
+			big5Str = utf8.getBytes("big5");
+		} catch (UnsupportedEncodingException e) {
+			
+			e.printStackTrace();
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		for(byte b : big5Str){		
+			sb.append("%");
+			sb.append(String.format("%02X", b));
+		}
+		
+		return sb.toString();
 	}
 }

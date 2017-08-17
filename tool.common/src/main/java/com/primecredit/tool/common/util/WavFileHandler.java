@@ -141,6 +141,11 @@ public class WavFileHandler {
 				AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
 				int nWrittenFrames = 0;
 				nWrittenFrames = AudioSystem.write(audioInputStreamAIS, fileType, pcmFile);
+				
+				if(nWrittenFrames <= 0) {
+					System.out.println("Failed: No Frame Written" );
+				}
+				
 			}else {
 				long framesLenght = ais.getFrameLength();
 				double time = framesLenght / format.getFrameRate();

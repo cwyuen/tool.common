@@ -1,45 +1,30 @@
 package com.primecredit.tool.common.wsobject.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.primecredit.tool.common.domain.NaturaLangEntry;
 import com.primecredit.tool.common.wsobject.BaseWsObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NaturalLangRequest extends BaseWsObject{
-	private String input;
+public class FrequencyWordRequest extends BaseWsObject {
+	private String text;
 	private String sourceFile; 
-	private int line; 
-	private NaturaLangEntry entry;
-
-	public String getInput() {
-		return input;
+	private int line;
+	
+	public String getText() {
+		return text;
 	}
-
-	public void setInput(String input) {
-		this.input = input;
+	public void setText(String text) {
+		this.text = text;
 	}
-
 	public String getSourceFile() {
 		return sourceFile;
 	}
-
 	public void setSourceFile(String sourceFile) {
 		this.sourceFile = sourceFile;
 	}
-
 	public int getLine() {
 		return line;
 	}
-
 	public void setLine(int line) {
 		this.line = line;
-	}
-
-	public NaturaLangEntry getEntry() {
-		return entry;
-	}
-
-	public void setEntry(NaturaLangEntry entry) {
-		this.entry = entry;
-	}
+	} 
 }
